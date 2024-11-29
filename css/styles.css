@@ -320,6 +320,7 @@ button:hover {
 }
 /* Navbar */
 .navbar {
+    position: sticky; /* Makes the navbar stick to the viewport */
     height: 70px; /* Set navbar height */
     display: flex;
     align-items: center; /* Center items vertically */
@@ -330,6 +331,9 @@ button:hover {
     border-radius: 10px; /* Subtle rounded edges */
     background-color: #22B14C; /* Green background */
     box-sizing: border-box; /* Include padding in the width calculation */
+    top: 0; /* Sticks the navbar to the top of the viewport */
+    z-index: 1000; /* Ensures the navbar stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for a subtle effect */
 }
 
 .hamburger {
