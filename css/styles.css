@@ -414,7 +414,7 @@ h1, h2, h3, p {
         margin: 20px 20px; /* Adjust left margin for smaller screens */
     }
     #service {
-        width: 30%; /* Fit 2 items per row on mobile */
+        width: 35%; /* Fit 2 items per row on mobile */
     }
 
     #title_text {
