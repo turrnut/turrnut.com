@@ -135,6 +135,10 @@ body {
     height: 100%;
     object-fit: cover;
     opacity: 0.5; /* Half opacity for a neutral effect */
+    
+    pointer-events: none;
+    user-select: none;
+    
 }
 
 /* Large Title Text */
@@ -199,7 +203,7 @@ h3 {
 p {
     font-size: 1.5rem; /* Smaller than headers */
     color: black;
-    margin: 20px 40px;
+    margin: 40px 40px;
 }
 
 ::-moz-selection { /* Code for Firefox */
@@ -214,11 +218,6 @@ p {
 
 /*************service list***************/
 /* General reset */
-body, ul, h1, h2, h3, p {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 body {
     font-family: 'Times New Roman', Times, serif;
     background-color: #ffffff; /* Neutral white background when no video */
@@ -340,7 +339,7 @@ button:hover {
 
 
 h1, h2, h3, p {
-    margin: 20px 20px;
+    margin: 10px 60px;
 }
 
 /* Media query to hide hamburger when there's enough space for all elements */
@@ -413,5 +412,47 @@ h1, h2, h3, p {
     #title_text_small {
         font-size: 6vw; /* Adjust size for smaller screens */
     }
+}
+
+#align_left {
+    float: left; /* Align the image to the left */
+    margin: 40px 40px 40px 40px; /* Add spacing around the image */
+    max-width: 50%; /* Limit the image size to half the container width */
+    max-height: 300px; /* Set a maximum height */
+    display: block; /* Ensure the image behaves as a block element */
+}
+
+#align_right {
+    float: right; /* Align the image to the right */
+    margin: 40px 40px 40px 40px; /* Add spacing around the image */
+    max-width: 50%; /* Limit the image size to half the container width */
+    max-height: 300px; /* Set a maximum height */
+    display: block; /* Ensure the image behaves as a block element */
+}
+
+#align_center {
+    display: block; /* Center image on its own line */
+    margin: 40px auto; /* Center the image horizontally and add vertical spacing */
+    max-width: 80%; /* Limit the image size to 80% of the container width */
+    max-height: 300px; /* Set a maximum height */
+    box-sizing: border-box; /* Include padding/margin in the box model */
+}
+
+
+p a:link{
+    color:#1A94C0;
+}
+
+p a:visited{
+    color:#1A94C0;
+}
+
+p a:active{
+    color:yellow;
+    background-color: purple;
+}
+p a:hover{
+    color:#ffffff;
+    background-color: #22B14C;
 }
 

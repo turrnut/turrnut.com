@@ -1,4 +1,3 @@
-writeTo = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,14 +24,31 @@ writeTo = """
             <li><a href="https://www.youtube.com/@turrnut" target="_blank">YouTube</a></li>
             <li><a href="../blogs/">Blog</a></li>
             <li><a href="../turrnesian/">Turrnesian</a></li>
-            <li><a href="../about/">About</a></li>
+            <li><a href="">About</a></li>
         </ul>
     </nav>
     
     
     
-    
     <!-- STUFF -->
+    <h1>About Turrnut</h1>
+ 
+    <img id="align_right" src="img/me.jpg" alt="An image of Turrnut"/>
+    <p>Victor Wu, also known by his username <b>Turrnut</b>, is a YouTuber, writer, and polyglot. His
+    videos are mostly about history and politics. During his free time, he enjoys reading and playing tennis.
+    </p>
+    <p>P.S. It's weird how I wrote that in third person because I am Turrnut...</p>
+    <br/>
+
+    
+    <p><a target="_blank" href="https://discord.gg/F8mpvVgjNs">Turrnut Discord</a></p>
+    <p><a target="_blank" href="https://www.x.com/@turrnut">Turrnut 𝕏(Formerly Twitter)</a></p>
+    <p><a target="_blank" href="https://www.reddit.com/r/turrnut">Turrnut Subreddit</a></p>
+    <br/>
+
+
+    <button id="contrib">Click here to contribute to this site on Github</button>
+
 
     <br/>
     <br/>
@@ -43,11 +59,11 @@ writeTo = """
     <footer class="footer">
         Copyright (c) Turrnut 2024, All Rights Reserved
     </footer>
-
+    <script defer>
+        document.getElementById("contrib").onclick = () => {
+            window.open("https://github.com/turrnut/turrnut.com");
+        }
+    </script>
     <script src="../js/script.js"></script>
 </body>
 </html>
-"""
-
-with open("example.html", "w") as fobj:
-    fobj.write(writeTo)
