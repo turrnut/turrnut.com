@@ -1,6 +1,10 @@
-:root{
-    --screenthreshold: 900px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+
 
 /* General reset */
 body, ul, h1, h2, h3, p {
@@ -347,9 +351,7 @@ h1, h2, h3, p {
     margin: 20px auto; /* Center the video horizontally and add vertical spacing */
     width: 60%; /* Smaller width on PC */
     max-width: 600px; /* Limit the maximum width */
-    height: calc(60vw * 9 / 16); /* Maintain a 16:9 aspect ratio */
     max-height: 338px; /* Adjust maximum height for PC */
-    box-sizing: border-box; /* Include padding/margin in width calculation */
 }
 
 /* Media query to hide hamburger when there's enough space for all elements */
