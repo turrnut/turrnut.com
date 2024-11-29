@@ -342,6 +342,16 @@ h1, h2, h3, p {
     margin: 10px 60px;
 }
 
+#yt_vid {
+    display: block; /* Ensures the video behaves like a block element */
+    margin: 20px auto; /* Center the video horizontally and add vertical spacing */
+    width: 60%; /* Smaller width on PC */
+    max-width: 600px; /* Limit the maximum width */
+    height: calc(60vw * 9 / 16); /* Maintain a 16:9 aspect ratio */
+    max-height: 338px; /* Adjust maximum height for PC */
+    box-sizing: border-box; /* Include padding/margin in width calculation */
+}
+
 /* Media query to hide hamburger when there's enough space for all elements */
 @media (min-width: 768px) {
     .hamburger {
@@ -413,6 +423,7 @@ h1, h2, h3, p {
         font-size: 6vw; /* Adjust size for smaller screens */
     }
 }
+    
 
 #align_left {
     float: left; /* Align the image to the left */
