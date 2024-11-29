@@ -422,8 +422,13 @@ h1, h2, h3, p {
     #title_text_small {
         font-size: 6vw; /* Adjust size for smaller screens */
     }
-}
     
+    #yt_vid {
+        width: calc(100% - 40px); /* Fit entire screen width minus 20px margin on each side */
+        height: calc((100% - 40px) * 9 / 16) + 30px; /* Increase height with a 4:3 aspect ratio */
+        margin: 20px; /* Add margin around the video */
+    }
+}
 
 #align_left {
     float: left; /* Align the image to the left */
