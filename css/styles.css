@@ -478,3 +478,24 @@ p a:hover{
     background-color: #22B14C;
 }
 
+#title_text_small a:link{
+    color:black;
+    /* text-decoration: none; */
+}
+
+#title_text_small a:visited{
+    color:black;
+    /* text-decoration: none; */
+}
+
+#title_text_small a:active{
+    color:yellow;
+    background-color: purple;
+    /* text-decoration: none; */
+}
+#title_text_small a:hover{
+    color:#ffffff;
+    background-color: #22B14C;
+    /* text-decoration: none; */
+}
+
