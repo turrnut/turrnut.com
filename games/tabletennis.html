@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ping Pong Game</title>
+<style>
+  body, html {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  canvas {
+    background: #444;
+    width: 100vw;
+    height: 100vh;
+  }
+  #homeScreen, #colorPickerContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+  }
+  button, input[type="number"], select, input[type="color"] {
+    margin-top: 10px;
+    padding: 10px;
+    color: #000;
+  }
+  #colorPickerContainer {
+    display: none; /* Initially hidden, shown before game starts */
+  }
+</style>
+</head>
+<body>
+<div id="homeScreen">
+  <h2 style="color: white;">Welcome to Ping Pong!</h2>
+  <label for="maxPoints" style="color: white;">Play up to: </label>
+  <input type="number" id="maxPoints" min="1" value="5">
+  <label for="modeSelect" style="color: white;">Select Mode:</label>
+  <select id="modeSelect">
+    <option value="PVP">Player vs Player</option>
+    <option value="PVAI">Player vs TurrAI</option>
+  </select>
+  <button onclick="startGame()">Start Game</button>
+</div>
+<div id="colorPickerContainer">
+  <label for="ballColorPicker" style="color: white;">Choose Ball Color:</label>
+  <input type="color" id="ballColorPicker" value="#FFFFFF">
+</div>
+<canvas id="gameCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let maxPoints = 5;
+let mode = 'PVP';
+let gameInterval;
+let player1Score = 0;
+let player2Score = 0;
+let paddleHeight = 100;
+let paddleWidth = 15;
+let paddleSpeed = 10;
+let ballSpeed = 10;
+let ballColor = document.getElementById('ballColorPicker').value;
+let ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 10, dx: 0, dy: 0 };
+let paddle1 = { x: 0, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
+let paddle2 = { x: canvas.width - paddleWidth, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
+let aiErrorCount = 0;
+let aiMissRate = 5; // TurrAI will miss every 5th hit intentionally
+let keys = {};
+
+function startGame() {
+  maxPoints = parseInt(document.getElementById('maxPoints').value);
+  mode = document.getElementById('modeSelect').value;
+  initializeBall();
+  document.getElementById('homeScreen').style.display = 'none';
+  document.getElementById('colorPickerContainer').style.display = 'none';
+  canvas.style.display = 'block';
+  gameLoop();
+}
+
+function initializeBall() {
+  // Create an array of angles in radians for 8 initial directions
+  const angles = [Math.PI / 4, 3 * Math.PI / 4, 5 * Math.PI / 4, 7 * Math.PI / 4, Math.PI / 3, 2 * Math.PI / 3, 4 * Math.PI / 3, 5 * Math.PI / 3];
+  let angle = angles[Math.floor(Math.random() * angles.length)]; // Randomly select one of the eight angles
+  ball.dx = ballSpeed * Math.cos(angle);
+  ball.dy = ballSpeed * Math.sin(angle);
+}
+
+function gameLoop() {
+  gameInterval = setInterval(() => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawMiddleLine();
+    movePaddles();
+    drawPaddle(paddle1.x, paddle1.y, paddleWidth, paddleHeight);
+    drawPaddle(paddle2.x, paddle2.y, paddleWidth, paddleHeight);
+    moveBall();
+    drawBall(ball.x, ball.y, ball.radius);
+    displayScore();
+    checkWinCondition();
+  }, 16);
+}
+
+function drawMiddleLine() {
+  ctx.strokeStyle = 'white';
+  ctx.beginPath();
+  ctx.setLineDash([5, 15]);
+  ctx.moveTo(canvas.width / 2, 0);
+  ctx.lineTo(canvas.width / 2, canvas.height);
+  ctx.stroke();
+}
+
+function movePaddles() {
+  if (keys['s']) paddle1.dy = paddleSpeed;
+  if (keys['w']) paddle1.dy = -paddleSpeed;
+  if (keys['ArrowDown'] && mode === 'PVP') paddle2.dy = paddleSpeed;
+  if (keys['ArrowUp'] && mode === 'PVP') paddle2.dy = -paddleSpeed;
+
+  paddle1.y += paddle1.dy;
+  paddle1.y = Math.max(0, Math.min(canvas.height - paddleHeight, paddle1.y));
+  paddle2.y += paddle2.dy;
+  paddle2.y = Math.max(0, Math.min(canvas.height - paddleHeight, paddle2.y));
+
+  paddle1.dy = 0;
+  paddle2.dy = 0;
+
+  if (mode === 'PVAI') {
+    aiMovement();
+  }
+}
+
+function aiMovement() {
+  if (ball.dx > 0) { // Ball moving towards AI
+    aiErrorCount++;
+    if (aiErrorCount % aiMissRate === 0) {
+      // Simulate a miss by making the paddle move in the opposite direction
+      paddle2.dy = (ball.y > paddle2.y + paddleHeight / 2) ? -paddleSpeed : paddleSpeed;
+    } else {
+      // Normal behavior
+      paddle2.dy = (ball.y < paddle2.y + paddleHeight / 2) ? -paddleSpeed : paddleSpeed;
+    }
+  } else {
+    paddle2.dy = 0; // Stop moving when ball is not coming towards AI
+  }
+  paddle2.y += paddle2.dy;
+  if (paddle2.y < 0) paddle2.y = 0;
+  if (paddle2.y + paddleHeight > canvas.height) paddle2.y = canvas.height - paddleHeight;
+}
+
+function drawPaddle(x, y, width, height) {
+  ctx.fillStyle = 'white';
+  ctx.fillRect(x, y, width, height);
+}
+
+function moveBall() {
+  ball.x += ball.dx;
+  ball.y += ball.dy;
+  if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+    ball.dy = -ball.dy;
+  }
+  if (ball.x - ball.radius < paddle1.x + paddleWidth && ball.y > paddle1.y && ball.y < paddle1.y + paddleHeight) {
+    ball.dx = Math.abs(ball.dx);
+  } else if (ball.x + ball.radius > paddle2.x && ball.y > paddle2.y && ball.y < paddle2.y + paddleHeight) {
+    ball.dx = -Math.abs(ball.dx);
+  }
+  if (ball.x - ball.radius < 0) {
+    player2Score++;
+    resetBall();
+  } else if (ball.x + ball.radius > canvas.width) {
+    player1Score++;
+    resetBall();
+  }
+}
+
+function drawBall(x, y, radius) {
+  ctx.fillStyle = ballColor;
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function displayScore() {
+  ctx.font = '20px Arial';
+  ctx.fillStyle = 'white'; // Fixed text color
+  ctx.fillText(`Player 1`, 20, 30);
+  ctx.fillText(`${mode === 'PVP' ? 'Player 2' : 'TurrAI'}`, canvas.width - 100, 30);
+  ctx.fillText(`${player1Score}`, canvas.width / 2 - 40, 30);
+  ctx.fillText(`${player2Score}`, canvas.width / 2 + 20, 30);
+}
+
+function resetBall() {
+  ball.x = canvas.width / 2;
+  ball.y = canvas.height / 2;
+  initializeBall();
+}
+
+function checkWinCondition() {
+  if (player1Score >= maxPoints || player2Score >= maxPoints) {
+    clearInterval(gameInterval);
+    alert(`Game Over! ${player1Score >= maxPoints ? 'Player 1' : (mode === 'PVP' ? 'Player 2' : 'TurrAI')} wins!`);
+    document.location.reload();
+  }
+}
+
+document.addEventListener('keydown', function(event) {
+  keys[event.key] = true;
+});
+
+document.addEventListener('keyup', function(event) {
+  keys[event.key] = false;
+});
+
+// Handle ball color change
+document.getElementById('ballColorPicker').addEventListener('change', function(e) {
+  ballColor = e.target.value;
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dot Survival</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Resize the canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const player = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            speed: 5,
+            size: 10,
+            health: 100
+        };
+
+        const targets = [];
+        let keys = {};
+        let score = 0; // Survival score
+
+        // Player name input
+        let playerName = prompt("Enter your name:");
+        if (!playerName) playerName = "Player"; // Default name if empty
+
+        // Initialize timers
+        let survivalTimer = 0; // For score increase every 10 seconds
+        let enemySpawnTimer = 0; // For adding enemies every 15 seconds
+
+        // Create a target with random movement
+        function createTarget() {
+            const target = {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: 20,
+                dx: (Math.random() - 0.5) * 4, // Random horizontal velocity
+                dy: (Math.random() - 0.5) * 4  // Random vertical velocity
+            };
+            targets.push(target);
+        }
+
+        // Start with 40 enemies
+        for (let i = 0; i < 40; i++) {
+            createTarget();
+        }
+
+        // Update game state
+        function updateGameState(deltaTime) {
+            // Calculate normalized speed for diagonal movement
+            const moveX = (keys["ArrowLeft"] || keys["a"] ? -1 : 0) + (keys["ArrowRight"] || keys["d"] ? 1 : 0);
+            const moveY = (keys["ArrowUp"] || keys["w"] ? -1 : 0) + (keys["ArrowDown"] || keys["s"] ? 1 : 0);
+            const length = Math.sqrt(moveX * moveX + moveY * moveY) || 1;
+
+            player.x += (moveX / length) * player.speed;
+            player.y += (moveY / length) * player.speed;
+
+            // Prevent player from going out of bounds
+            if (player.x - player.size < 0) player.x = player.size;
+            if (player.x + player.size > canvas.width) player.x = canvas.width - player.size;
+            if (player.y - player.size < 0) player.y = player.size;
+            if (player.y + player.size > canvas.height) player.y = canvas.height - player.size;
+
+            // Update targets
+            targets.forEach((target) => {
+                target.x += target.dx;
+                target.y += target.dy;
+
+                // Bounce targets off the walls
+                if (target.x - target.radius < 0 || target.x + target.radius > canvas.width) {
+                    target.dx *= -1; // Reverse horizontal direction
+                }
+                if (target.y - target.radius < 0 || target.y + target.radius > canvas.height) {
+                    target.dy *= -1; // Reverse vertical direction
+                }
+
+                // Randomly change direction
+                if (Math.random() < 0.01) { // 1% chance per frame
+                    target.dx = (Math.random() - 0.5) * 4;
+                    target.dy = (Math.random() - 0.5) * 4;
+                }
+
+                // Check collision with player
+                const dx = target.x - player.x;
+                const dy = target.y - player.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < target.radius + player.size) {
+                    // Player takes damage
+                    player.health -= 1;
+                    if (player.health <= 0) {
+                        alert(`Game Over! ${playerName}, your Score: ${score}`);
+                        player.health = 100;
+                        score = 0; // Reset score
+                        targets.length = 0; // Reset targets
+                        for (let i = 0; i < 40; i++) createTarget(); // Respawn initial targets
+                    }
+                }
+            });
+
+            // Increase score every 10 seconds
+            survivalTimer += deltaTime;
+            if (survivalTimer >= 10000) {
+                score += 1;
+                survivalTimer = 0; // Reset survival timer
+            }
+
+            // Add new enemies every 15 seconds
+            enemySpawnTimer += deltaTime;
+            if (enemySpawnTimer >= 15000) {
+                for (let i = 0; i < 2; i++) createTarget();
+                enemySpawnTimer = 0; // Reset spawn timer
+            }
+        }
+
+        // Draw everything
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw player
+            ctx.fillStyle = "white";
+            ctx.fillRect(player.x - player.size, player.y - player.size, player.size * 2, player.size * 2);
+
+            // Draw targets
+            targets.forEach((target) => {
+                ctx.beginPath();
+                ctx.arc(target.x, target.y, target.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+            });
+
+            // Draw player health
+            ctx.fillStyle = "white";
+            ctx.font = "20px Arial";
+            ctx.fillText(`Health: ${player.health}`, 20, 30);
+
+            // Draw score
+            ctx.fillText(`Score: ${score}`, 20, 60);
+
+            // Draw player name
+            ctx.fillText(`Player: ${playerName}`, 20, 90);
+        }
+
+        // Game loop
+        let lastTime = 0;
+        function gameLoop(timestamp) {
+            const deltaTime = timestamp - lastTime;
+            lastTime = timestamp;
+
+            updateGameState(deltaTime);
+            drawGame();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Handle keyboard input
+        window.addEventListener("keydown", (e) => {
+            keys[e.key] = true;
+        });
+
+        window.addEventListener("keyup", (e) => {
+            keys[e.key] = false;
+        });
+
+        // Start the game loop
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
