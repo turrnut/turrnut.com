@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian Roulette</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: white;
+        }
+        .message {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .roulette {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            border-radius: 50%;
+            border: 5px solid white;
+            position: relative;
+        }
+        .chamber {
+            width: 20px;
+            height: 20px;
+            background-color: black;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .spin {
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Russian Roulette</h1>
+        <p>Click the button to pull the trigger. Survive and pass the turn!</p>
+        <div class="roulette" id="roulette">
+            <div class="chamber" style="top: 10px; left: 40px;"></div>
+            <div class="chamber" style="top: 40px; left: 10px;"></div>
+            <div class="chamber" style="top: 40px; left: 70px;"></div>
+            <div class="chamber" style="top: 70px; left: 40px;"></div>
+            <div class="chamber" style="top: 70px; left: 10px;"></div>
+            <div class="chamber" style="top: 10px; left: 70px;"></div>
+        </div>
+        <button onclick="playGame()">Pull Trigger</button>
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        let bulletChamber = Math.floor(Math.random() * 6) + 1;
+        let currentChamber = 1;
+        let roulette = document.getElementById('roulette');
+        
+        function playGame() {
+            roulette.classList.add('spin');
+            setTimeout(() => {
+                roulette.classList.remove('spin');
+                if (currentChamber === bulletChamber) {
+                    document.getElementById('message').innerText = "💀 Bang! You're dead!";
+                    document.querySelector('button').disabled = true;
+                } else {
+                    document.getElementById('message').innerText = "😅 Click! You're safe... for now.";
+                    currentChamber++;
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
