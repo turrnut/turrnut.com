@@ -436,7 +436,7 @@ h1, h2, h3, p {
     }
 }
 
-#align_left {
+.align_left {
     float: left; /* Align the image to the left */
     margin: 40px 40px 40px 40px; /* Add spacing around the image */
     max-width: 50%; /* Limit the image size to half the container width */
@@ -444,7 +444,7 @@ h1, h2, h3, p {
     display: block; /* Ensure the image behaves as a block element */
 }
 
-#align_right {
+.align_right {
     float: right; /* Align the image to the right */
     margin: 40px 40px 40px 40px; /* Add spacing around the image */
     max-width: 50%; /* Limit the image size to half the container width */
@@ -452,7 +452,7 @@ h1, h2, h3, p {
     display: block; /* Ensure the image behaves as a block element */
 }
 
-#align_center {
+.align_center {
     display: block; /* Center image on its own line */
     margin: 40px auto; /* Center the image horizontally and add vertical spacing */
     max-width: 80%; /* Limit the image size to 80% of the container width */

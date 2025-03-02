@@ -19,12 +19,27 @@
     <!-- Title Text -->
     <div id="title_text">404</div>
     <div id="title_text_small">Page not found</div>
+    <p><img class="align_center" id="randomGif" alt="Random GIF" width="40%" height="40%"></p>
     <button onclick="window.location.href = 'index.html';"> Click here to return home</button>
     <!-- Footer -->
     <footer class="footer">
         Copyright (c) Turrnut 2025
     </footer>
+    <script>
+        // Array of GIF URLs
+        const gifs = [
+            "img/4041.gif",
+            "img/4042.gif",
+            "img/4043.gif"
+        ];
 
+        // Select a random GIF
+        const randomIndex = Math.floor(Math.random() * gifs.length);
+        const chosenGif = gifs[randomIndex];
+
+        // Set the image source
+        document.getElementById("randomGif").src = chosenGif;
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>
