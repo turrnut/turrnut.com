@@ -41,7 +41,7 @@ writeTo = """
 
     <!-- Footer -->
     <footer class="footer">
-        Copyright (c) Turrnut 2025
+        Copyright (c) Turrnut
     </footer>
 
     <script src="../js/script.js"></script>

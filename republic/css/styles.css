@@ -1,0 +1,501 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+/* General reset */
+body, ul, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #ffffff; /* Neutral white background when no video */
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1b8a3c; /* Green background */
+    padding: 20px;
+    width: 60%; /* Navbar occupies 3/5 of the screen width on desktop */
+    margin: auto;
+    color: white;
+    position: relative;
+    z-index: 10;
+    border-radius: 10px; /* Subtle rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none; /* Remove underline for anchor tags */
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.logo:hover {
+    text-decoration: none; /* Prevent underline on hover */
+}
+
+.logo-icon {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    flex: 1;
+}
+
+.nav-links li {
+    padding: 10px;
+    text-align: center;
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-family: 'Calibri', sans-serif; /* Nav items font */
+    display: block;
+    padding: 10px 20px; /* Make the clickable area larger */
+}
+
+/* Navbar hover */
+.nav-links li:hover {
+    background-color: #1A8A3B; /* Hover background */
+    cursor: pointer;
+    transform: scale(1.05); /* Slight hover grow effect */
+}
+
+.nav-links li:hover a {
+    color: #ffffff; /* Green text on hover */
+    font-size: 1.5rem; /* Larger text on hover */
+    font-weight: bold;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: #1b8a3c; /* Green background */
+    padding: 10px;
+    border-radius: 5px;
+    transition: transform 0.3s ease; /* Fancy transition effect */
+}
+
+.hamburger span {
+    height: 3px;
+    width: 25px;
+    background: white;
+    margin: 4px 0;
+    transition: all 0.3s ease; /* Smooth animation */
+}
+
+.hamburger:hover {
+    transform: rotate(360deg); /* Rotate on hover */
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0; /* Hide middle bar */
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Background Video */
+#backgroundvideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+}
+
+#backgroundvideo video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5; /* Half opacity for a neutral effect */
+    
+    pointer-events: none;
+    user-select: none;
+    
+}
+
+/* Large Title Text */
+#title_text {
+    position: relative;
+    text-align: center;
+    color: black; /* Title text color updated to black */
+    font-size: 7vw; /* Dynamically scale text size for larger mobile view */
+    font-weight: bold;
+    margin-top: 25vh;
+    z-index: 5;
+}
+
+/***** fade in *****/
+
+body {
+    opacity: 0;
+    animation: fadeIn 3s ease forwards;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Footer */
+.footer {
+    background-color: #1b8a3c; /* Same green as navbar */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-family: 'Times New Roman', Times, serif;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Default support for h1, h2, h3, p */
+h1 {
+    font-size: 3rem; /* Largest size */
+    color: black;
+    margin: 20px 40px; /* Farther away from the left */
+}
+
+h2 {
+    font-size: 2.5rem; /* Medium size */
+    color: black;
+    margin: 20px 40px;
+}
+
+h3 {
+    font-size: 2rem; /* Smallest size among headers */
+    color: black;
+    margin: 20px 40px;
+}
+
+p {
+    font-size: 1.5rem; /* Smaller than headers */
+    color: black;
+    margin: 40px 40px;
+}
+
+::-moz-selection { /* Code for Firefox */
+    color: white;
+    background: #1b8a3c;
+}
+  
+::selection {
+    color: white;
+    background: #1b8a3c;
+}
+
+/*************service list***************/
+/* General reset */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #ffffff; /* Neutral white background when no video */
+}
+
+/* Title Text */
+#title_text {
+    position: relative;
+    text-align: center;
+    color: black;
+    font-size: 4vw; /* Dynamically scale text size */
+    font-weight: bold;
+    margin-top: 5vh;
+    z-index: 5;
+}
+
+#title_text_small {
+    position: relative;
+    text-align: center;
+    color: black;
+    font-size: 2vw; /* Smaller than title_text */
+    font-weight: normal;
+    margin-top: 10px;
+    z-index: 5;
+}
+
+/* Service List */
+#service_list {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Allows wrapping to a new row */
+    padding: 20px;
+    margin: 40px auto;
+    max-width: 90%; /* Constrain the width */
+    gap: 20px; /* Space between items */
+}
+
+#service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-decoration: none;
+    padding: 20px;
+    width: 17%; /* Fit 4 items horizontally on large screens */
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+#service img {
+    width: 100px; /* Fixed image size */
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+#service p {
+    color: black;
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+#service:hover {
+    transform: scale(1.05); /* Slight hover grow effect */
+    background-color: #1b8a3c; /* Turn green */
+}
+
+#service:hover p {
+    color: white; /* Change text color on hover */
+}
+
+#service:hover img {
+    filter: brightness(0.8); /* Slightly darken image on hover */
+}
+
+/* BUTTON */
+button {
+    display: block;
+    margin: 20px auto; /* Center horizontally and add spacing */
+    padding: 10px 20px; /* Add padding for a better button size */
+    background-color: #1b8a3c; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    font-family: 'Calibri', sans-serif; /* Match font with <p> */
+    font-size: 1.2rem; /* Match <p> font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth effects */
+}
+
+button:hover {
+    background-color: #1A8A3B; /* Gold background on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+/* Navbar */
+.navbar {
+    position: sticky; /* Makes the navbar stick to the viewport */
+    height: 70px; /* Set navbar height */
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between logo and other elements */
+    padding: 0 20px; /* Add horizontal padding */
+    width: 90%; /* Limit navbar width on PC */
+    margin: 0 auto; /* Center the navbar on PC */
+    border-radius: 10px; /* Subtle rounded edges */
+    background-color: #1b8a3c; /* Green background */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    top: 0; /* Sticks the navbar to the top of the viewport */
+    z-index: 1000; /* Ensures the navbar stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for a subtle effect */
+}
+
+.hamburger {
+    margin-left: auto; /* Push the hamburger to the far right within the navbar */
+    padding: 15px; /* Add padding for better click area */
+    background-color: #1b8a3c; /* Match navbar background */
+    border: none; /* Remove any border */
+    border-radius: 5px; /* Optional rounded edges */
+    cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+
+h1, h2, h3, p {
+    margin: 10px 60px;
+}
+
+#yt_vid {
+    display: block; /* Ensures the video behaves like a block element */
+    margin: 20px auto; /* Center the video horizontally and add vertical spacing */
+    width: 60%; /* Smaller width on PC */
+    max-width: 600px; /* Limit the maximum width */
+    max-height: 338px; /* Adjust maximum height for PC */
+}
+
+/* Media query to hide hamburger when there's enough space for all elements */
+@media (min-width: 768px) {
+    .hamburger {
+        display: none; /* Hide the hamburger on larger screens */
+    }
+
+    .nav-links {
+        display: flex; /* Show full navbar links */
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        width: 90%; /* Take up most of the screen on mobile */
+    }
+
+    .hamburger {
+        display: flex; /* Visible only on mobile */
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: #1b8a3c;
+        position: absolute;
+        right: 10px;
+        top: 70px;
+        width: 150px;
+        padding: 10px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    #title_text {
+        font-size: 10vw; /* Larger text for mobile devices */
+    }
+
+    h1 {
+        font-size: 2.8rem; /* Slightly smaller for mobile */
+    }
+
+    h2 {
+        font-size: 2.3rem; /* Slightly smaller for mobile */
+    }
+
+    h3 {
+        font-size: 2rem; /* Consistent size for smaller screens */
+    }
+
+    p {
+        font-size: 1.4rem; /* Consistent paragraph size for mobile */
+    }
+
+    h1, h2, h3, p {
+        margin: 20px 20px; /* Adjust left margin for smaller screens */
+    }
+    #service {
+        width: 35%; /* Fit 2 items per row on mobile */
+    }
+
+    #title_text {
+        font-size: 10vw; /* Larger title for mobile */
+    }
+
+    #title_text_small {
+        font-size: 6vw; /* Adjust size for smaller screens */
+    }
+    
+    #yt_vid {
+        width: calc(100% - 40px); /* Fit entire screen width minus 20px margin on each side */
+        height: calc((100% - 40px) * 9 / 16) + 30px; /* Increase height with a 4:3 aspect ratio */
+        margin: 20px; /* Add margin around the video */
+    }
+}
+
+.align_left {
+    float: left; /* Align the image to the left */
+    margin: 40px 40px 40px 40px; /* Add spacing around the image */
+    max-width: 50%; /* Limit the image size to half the container width */
+    max-height: 300px; /* Set a maximum height */
+    display: block; /* Ensure the image behaves as a block element */
+}
+
+.align_right {
+    float: right; /* Align the image to the right */
+    margin: 40px 40px 40px 40px; /* Add spacing around the image */
+    max-width: 50%; /* Limit the image size to half the container width */
+    max-height: 300px; /* Set a maximum height */
+    display: block; /* Ensure the image behaves as a block element */
+}
+
+.align_center {
+    display: block; /* Center image on its own line */
+    margin: 40px auto; /* Center the image horizontally and add vertical spacing */
+    max-width: 80%; /* Limit the image size to 80% of the container width */
+    max-height: 300px; /* Set a maximum height */
+    box-sizing: border-box; /* Include padding/margin in the box model */
+}
+
+
+p a:link{
+    color:#1A94C0;
+}
+
+p a:visited{
+    color:#1A94C0;
+}
+
+p a:active{
+    color:yellow;
+    background-color: purple;
+}
+p a:hover{
+    color:#ffffff;
+    background-color: #1b8a3c;
+}
+
+#title_text_small a:link{
+    color:black;
+    /* text-decoration: none; */
+}
+
+#title_text_small a:visited{
+    color:black;
+    /* text-decoration: none; */
+}
+
+#title_text_small a:active{
+    color:yellow;
+    background-color: purple;
+    /* text-decoration: none; */
+}
+#title_text_small a:hover{
+    color:#ffffff;
+    background-color: #1b8a3c;
+    /* text-decoration: none; */
+}
+
